@@ -140,12 +140,3 @@ make -j$(nproc) install
 make -j$(nproc) clean 
 make -j$(nproc) distclean
 hash -r
-
-sudo update-rc.d -f setup.part2.sh remove
-exit 0
-
-
-
-
-
-

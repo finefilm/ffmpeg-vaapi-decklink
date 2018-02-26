@@ -29,19 +29,6 @@ sudo apt-get -y install \
   dkms \
   vainfo
 
-scriptdir=`dirname $0`
-sudo update-rc.d -f setup.part2.sh remove
-cp $scriptdir"/setup.part2.sh" /etc/init.d/
-sudo chmod +x /etc/init.d/setup.part2.sh
-sudo update-rc.d setup.part2.sh defaults 90
-
-sudo rm /etc/rc0.d/K90setup.part2.sh
-sudo rm /etc/rc1.d/K90setup.part2.sh
-sudo rm /etc/rc3.d/S90setup.part2.sh
-sudo rm /etc/rc4.d/S90setup.part2.sh
-sudo rm /etc/rc5.d/S90setup.part2.sh
-sudo rm /etc/rc6.d/K90setup.part2.sh
-
 # Create directories
 mkdir -p $HOME/vaapi
 mkdir -p $HOME/vaapi/sources
@@ -104,4 +91,3 @@ sudo make -j$(nproc) install
 
 
 sudo systemctl reboot
-
