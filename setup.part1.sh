@@ -63,6 +63,25 @@ time make -j$(nproc)
 sudo make -j$(nproc) install
 sudo ldconfig -vvvv
 
+# Build and install VA-API latest version - https://github.com/01org/libva
+cd $HOME/vaapi/sources
+git clone https://github.com/01org/libva
+cd libva
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+time make -j$(nproc)
+sudo make -j$(nproc) install
+
+# Build and install LibVA-utils latest version - https://github.com/intel/libva-utils
+cd $HOME/vaapi/sources
+git clone https://github.com/intel/libva-utils
+cd libva-utils
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+time make -j$(nproc)
+sudo make -j$(nproc) install
+
+
 # Build and install VA driver for Intel G45 & HD Graphics family latest version - https://github.com/01org/intel-hybrid-driver
 cd $HOME/vaapi/sources
 git clone https://github.com/01org/intel-hybrid-driver
@@ -82,25 +101,6 @@ cd intel-vaapi-driver
 time make -j$(nproc)
 sudo make -j$(nproc) install
 sudo ldconfig -vvvv
-
-# Build and install VA-API latest version - https://github.com/01org/libva
-cd $HOME/vaapi/sources
-git clone https://github.com/01org/libva
-cd libva
-./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
-./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
-time make -j$(nproc)
-sudo make -j$(nproc) install
-
-# Build and install LibVA-utils latest version - https://github.com/intel/libva-utils
-cd $HOME/vaapi/sources
-git clone https://github.com/intel/libva-utils
-cd libva-utils
-./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
-./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
-time make -j$(nproc)
-sudo make -j$(nproc) install
-
 
 sudo rm -R $HOME/vaapi
 
