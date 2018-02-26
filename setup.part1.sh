@@ -52,7 +52,7 @@ cd desktopvideo
 sudo dpkg -i desktopvideo_*.deb
 sudo dpkg -i desktopvideo-gui_*.deb
 sudo dpkg -i mediaexpress_*.deb
-rm -R $HOME/desktopvideo
+sudo rm -R $HOME/desktopvideo
 
 # Build and install  C for Media Runtime latest version - https://github.com/intel/cmrt
 cd $HOME/vaapi/sources
