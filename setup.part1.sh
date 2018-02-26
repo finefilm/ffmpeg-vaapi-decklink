@@ -27,7 +27,6 @@ sudo apt-get -y install \
   ssh \
   tcl \
   dkms \
-  vainfo
 
 # Create directories
 mkdir -p $HOME/vaapi
@@ -58,7 +57,7 @@ sudo rm -R $HOME/desktopvideo
 cd $HOME/vaapi/sources
 git clone https://github.com/01org/cmrt
 cd cmrt
-./autogen.sh
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
 ./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
 time make -j$(nproc)
 sudo make -j$(nproc) install
@@ -68,7 +67,7 @@ sudo ldconfig -vvvv
 cd $HOME/vaapi/sources
 git clone https://github.com/01org/intel-hybrid-driver
 cd intel-hybrid-driver
-./autogen.sh
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
 ./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
 time make -j$(nproc)
 sudo make -j$(nproc) install
@@ -78,7 +77,7 @@ sudo ldconfig -vvv
 cd $HOME/vaapi/sources
 git clone https://github.com/01org/intel-vaapi-driver
 cd intel-vaapi-driver
-./autogen.sh
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
 ./configure --enable-hybrid-codec --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
 time make -j$(nproc)
 sudo make -j$(nproc) install
@@ -88,10 +87,20 @@ sudo ldconfig -vvvv
 cd $HOME/vaapi/sources
 git clone https://github.com/01org/libva
 cd libva
-./autogen.sh 
-./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
 time make -j$(nproc)
 sudo make -j$(nproc) install
+
+# Build and install LibVA-utils latest version - https://github.com/intel/libva-utils
+cd $HOME/vaapi/sources
+git clone https://github.com/intel/libva-utils
+cd libva-utils
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR --bindir="$MY_DISTRO_PREFIX/bin"
+time make -j$(nproc)
+sudo make -j$(nproc) install
+
 
 sudo rm -R $HOME/vaapi
 
