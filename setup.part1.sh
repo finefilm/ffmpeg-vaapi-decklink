@@ -41,6 +41,9 @@ export MY_DISTRO_LIBDIR=/usr/lib/x86_64-linux-gnu
 # Download recent BMD Decklink SDK
 cd $HOME
 git clone http://github.com/finefilm/decklink
+cd decklink
+sudo cp * $MY_DISTRO_PREFIX/include
+rm -R $HOME/decklink
 
 # Download and install recent BMD Desktop Video driver and GUI and Media Express
 cd $HOME
@@ -49,6 +52,7 @@ cd desktopvideo
 sudo dpkg -i desktopvideo_*.deb
 sudo dpkg -i desktopvideo-gui_*.deb
 sudo dpkg -i mediaexpress_*.deb
+rm -R $HOME/desktopvideo
 
 # Build and install  C for Media Runtime latest version - https://github.com/intel/cmrt
 cd $HOME/vaapi/sources
@@ -89,5 +93,6 @@ cd libva
 time make -j$(nproc)
 sudo make -j$(nproc) install
 
+rm -R $HOME/vaapi
 
 sudo systemctl reboot
