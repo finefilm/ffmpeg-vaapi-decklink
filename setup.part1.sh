@@ -62,20 +62,6 @@ sudo dpkg -i desktopvideo-gui_*.deb > /dev/null
 echo "Installing Blackmagic Design - Media Express"
 sudo dpkg -i mediaexpress_*.deb > /dev/null
 
-# Build and install  C for Media Runtime latest version - https://github.com/intel/cmrt
-cd /tmp/vaapi/sources
-echo "Downloading CMRT - C for Media Runtime latest version"
-git clone http://github.com/01org/cmrt > /dev/null
-cd cmrt
-echo "Configuring CMRT"
-./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR > /dev/null
-./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR > /dev/null
-echo "Buliding CMRT"
-make -j$(nproc) > /dev/null
-echo "Installing CMRT"
-sudo make -j$(nproc) install > /dev/null
-sudo ldconfig > /dev/null
-
 # Build and install VA-API latest version - https://github.com/intel/libva
 cd /tmp/vaapi/sources
 echo "Downloading VA-API latest version"
@@ -102,10 +88,25 @@ make -j$(nproc) > /dev/null
 echo "Installing LibVA-utils"
 sudo make -j$(nproc) install > /dev/null
 
-# Build and install VA driver for Intel G45 & HD Graphics family latest version - http://github.com/intel/intel-hybrid-driver
+
+# Build and install  C for Media Runtime latest version - https://github.com/intel/cmrt
+cd /tmp/vaapi/sources
+echo "Downloading CMRT - C for Media Runtime latest version"
+git clone http://github.com/01org/cmrt > /dev/null
+cd cmrt
+echo "Configuring CMRT"
+./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR > /dev/null
+./configure --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR > /dev/null
+echo "Buliding CMRT"
+make -j$(nproc) > /dev/null
+echo "Installing CMRT"
+sudo make -j$(nproc) install > /dev/null
+sudo ldconfig > /dev/null
+
+# Build and install VA driver for Intel G45 & HD Graphics family latest version - https://github.com/01org/intel-hybrid-driver
 cd /tmp/vaapi/sources
 echo "Downloading VA driver for Intel G45 & HD Graphics family latest version"
-git clone http://github.com/intel/intel-hybrid-driver > /dev/null
+git clone https://github.com/01org/intel-hybrid-driver > /dev/null
 cd intel-hybrid-driver
 echo "Configuring VA driver"
 ./autogen.sh --prefix=$MY_DISTRO_PREFIX --libdir=$MY_DISTRO_LIBDIR > /dev/null
